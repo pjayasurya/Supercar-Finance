@@ -1,0 +1,6 @@
+import '../styles/globals.css';
+
+export const metadata = {
+  title: 'Supercar Finance',
+  description: 'Instant pre-approvals for exotic car financing',
+};
