@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid';
-import { db } from '../db/connection.js';
-import { ApplicationData } from '../schemas/application.js';
+import { db } from '../db/connection';
+import { ApplicationData } from '../schemas/application';
 
 export async function createApplication(
   userId: string,

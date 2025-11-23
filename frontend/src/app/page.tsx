@@ -8,23 +8,23 @@ export default function Home() {
   const { user } = useAuth();
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 via-luxury-900 to-gray-900">
+    <div className="min-h-screen bg-luxury-black text-white selection:bg-luxury-gold selection:text-black overflow-x-hidden">
       {/* Navigation */}
-      <nav className="border-b border-luxury-700 bg-black/50 backdrop-blur">
+      <nav className="fixed top-0 w-full z-50 border-b border-white/10 bg-luxury-black/80 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-luxury-500 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold">SF</span>
+          <div className="flex items-center space-x-3">
+            <div className="w-10 h-10 bg-gradient-to-br from-luxury-red to-luxury-red-dark rounded-2xl flex items-center justify-center shadow-lg shadow-luxury-red/20">
+              <span className="text-white font-serif font-bold text-xl">RF</span>
             </div>
-            <span className="text-xl font-bold text-white">Supercar Finance</span>
+            <span className="text-xl font-serif font-bold tracking-wide">Revline Financing</span>
           </div>
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-6">
             {user ? (
               <>
-                <span className="text-white text-sm">{user.email}</span>
+                <span className="text-luxury-platinum text-sm hidden sm:inline">{user.email}</span>
                 <Link
                   href="/dashboard"
-                  className="px-4 py-2 rounded-lg bg-luxury-500 text-white hover:bg-luxury-600 transition"
+                  className="px-6 py-2 rounded-full bg-white/5 border border-white/10 hover:border-luxury-red/50 hover:bg-white/10 transition-all duration-300"
                 >
                   Dashboard
                 </Link>
@@ -32,7 +32,7 @@ export default function Home() {
             ) : (
               <Link
                 href="/auth/signin"
-                className="px-4 py-2 rounded-lg bg-luxury-500 text-white hover:bg-luxury-600 transition"
+                className="px-6 py-2 rounded-full bg-gradient-to-r from-luxury-red to-luxury-red-dark text-white font-semibold hover:shadow-lg hover:shadow-luxury-red/20 transition-all duration-300 transform hover:-translate-y-0.5"
               >
                 Sign In
               </Link>
@@ -42,121 +42,145 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="text-center">
-          <h1 className="text-5xl md:text-7xl font-bold text-white mb-4 font-serif">
-            Supercar <span className="text-luxury-400">Financing</span>
+      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/luxury_supercar_hero.png"
+            alt="Luxury Supercar"
+            className="w-full h-full object-cover opacity-60"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-luxury-black/50 via-luxury-black/20 to-luxury-black"></div>
+        </div>
+
+        <div className="relative z-10 text-center px-4 max-w-5xl mx-auto mt-16">
+          <div className="inline-block mb-4 px-4 py-1 rounded-full border border-luxury-red/30 bg-luxury-red/10 backdrop-blur-sm">
+            <span className="text-luxury-red text-sm font-medium tracking-wider uppercase">The Art of Financing</span>
+          </div>
+          <h1 className="text-6xl md:text-8xl font-serif font-bold text-white mb-6 leading-tight">
+            Drive Your <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-luxury-red via-luxury-red-light to-luxury-red">Dream Today</span>
           </h1>
-          <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-            Get pre-approved from multiple lenders in 60 seconds. No credit damage. One soft pull.
+          <p className="text-xl md:text-2xl text-luxury-platinum/80 mb-10 max-w-2xl mx-auto font-light">
+            Experience the pinnacle of automotive financing. Instant pre-approvals for the world's most exclusive vehicles.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
             <Link
               href="/apply"
-              className="px-8 py-4 rounded-lg bg-luxury-500 text-white font-semibold hover:bg-luxury-600 transition text-lg"
+              className="group relative px-8 py-4 bg-luxury-red text-white font-bold text-lg rounded-full overflow-hidden transition-all hover:shadow-[0_0_40px_-10px_rgba(208,0,0,0.5)]"
             >
-              Start Application
+              <span className="relative z-10">Start Application</span>
+              <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
             </Link>
             <Link
               href="#features"
-              className="px-8 py-4 rounded-lg border border-luxury-500 text-luxury-400 font-semibold hover:bg-luxury-500/10 transition text-lg"
+              className="px-8 py-4 rounded-full border border-white/20 text-white font-medium hover:bg-white/5 hover:border-luxury-red/50 transition-all duration-300 backdrop-blur-sm"
             >
-              Learn More
+              Explore Features
             </Link>
           </div>
         </div>
+      </section>
 
-        {/* Features */}
-        <div id="features" className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
-          {[
-            {
-              title: 'Instant Pre-Approvals',
-              description: 'See offers from multiple lenders in under 60 seconds',
-              icon: '⚡',
-            },
-            {
-              title: 'Soft Credit Pull',
-              description: 'Your credit score never takes a hit',
-              icon: '🛡️',
-            },
-            {
-              title: 'Exotic Cars Only',
-              description: 'Browse supercars filtered by your approval amount',
-              icon: '🏎️',
-            },
-            {
-              title: 'Compare Offers',
-              description: 'Side-by-side rates, terms, and loan amounts',
-              icon: '📊',
-            },
-            {
-              title: 'Fast Lender Connection',
-              description: 'Your application goes directly to lenders',
-              icon: '🚀',
-            },
-            {
-              title: 'FCRA Compliant',
-              description: 'Enterprise-grade security and privacy',
-              icon: '🔒',
-            },
-          ].map((feature) => (
-            <div
-              key={feature.title}
-              className="rounded-lg border border-luxury-700 bg-luxury-900/50 p-6 hover:border-luxury-500 transition"
-            >
-              <span className="text-4xl mb-4 block">{feature.icon}</span>
-              <h3 className="text-lg font-semibold text-white mb-2">
-                {feature.title}
-              </h3>
-              <p className="text-gray-400">{feature.description}</p>
-            </div>
-          ))}
+      {/* Stats Section */}
+      <section className="relative z-20 -mt-20 pb-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              { stat: '60s', label: 'Approval Time', desc: 'Lightning fast processing' },
+              { stat: '$500k+', label: 'Loan Amount', desc: 'High-limit financing' },
+              { stat: '0', label: 'Credit Impact', desc: 'Soft pull only' },
+            ].map((item) => (
+              <div key={item.label} className="smooth-card p-8 text-center transform hover:-translate-y-1 transition-transform duration-300">
+                <p className="text-5xl font-serif font-bold text-luxury-red mb-2">{item.stat}</p>
+                <p className="text-white font-medium text-lg">{item.label}</p>
+                <p className="text-luxury-platinum/60 text-sm mt-1">{item.desc}</p>
+              </div>
+            ))}
+          </div>
         </div>
+      </section>
 
-        {/* Stats */}
-        <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-          {[
-            { stat: '<60s', label: 'App to Pre-Approval' },
-            { stat: '40%+', label: 'Approval Rate' },
-            { stat: '$80K-$500K', label: 'Loan Range' },
-          ].map((item) => (
-            <div key={item.stat}>
-              <p className="text-4xl font-bold text-luxury-400">{item.stat}</p>
-              <p className="text-gray-400 mt-2">{item.label}</p>
-            </div>
-          ))}
+      {/* Features Section */}
+      <section id="features" className="py-24 bg-luxury-charcoal relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-luxury-red/20 to-transparent"></div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-serif font-bold mb-4">Excellence in Every Detail</h2>
+            <p className="text-luxury-platinum/60 text-lg max-w-2xl mx-auto">
+              We've reimagined the financing experience to match the sophistication of the cars we fund.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                title: 'Instant Intelligence',
+                description: 'Our AI-driven engine matches you with premium lenders in seconds, not days.',
+                icon: '⚡',
+              },
+              {
+                title: 'Privacy First',
+                description: 'Bank-grade encryption and FCRA compliance ensure your data remains secure.',
+                icon: '🔒',
+              },
+              {
+                title: 'Exclusive Inventory',
+                description: 'Access a curated selection of vehicles from the nation\'s top exotic dealers.',
+                icon: '🏎️',
+              },
+            ].map((feature) => (
+              <div
+                key={feature.title}
+                className="group p-8 rounded-3xl bg-white/5 border border-white/5 hover:border-luxury-red/30 hover:bg-white/10 transition-all duration-500"
+              >
+                <div className="w-14 h-14 bg-luxury-red/10 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform duration-300">
+                  {feature.icon}
+                </div>
+                <h3 className="text-xl font-bold text-white mb-3 group-hover:text-luxury-red transition-colors">
+                  {feature.title}
+                </h3>
+                <p className="text-luxury-platinum/70 leading-relaxed">
+                  {feature.description}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="border-t border-luxury-700 bg-luxury-900/50 py-20 mt-20">
-        <div className="max-w-2xl mx-auto text-center px-4">
-          <h2 className="text-4xl font-bold text-white mb-4">Ready to finance your supercar?</h2>
-          <p className="text-gray-300 mb-8">
-            No credit impact. Multiple pre-approvals. Full transparency.
+      <section className="py-24 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-luxury-black to-luxury-charcoal"></div>
+        <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
+          <h2 className="text-5xl md:text-6xl font-serif font-bold mb-8">
+            Your <span className="text-luxury-red">Supercar</span> Awaits
+          </h2>
+          <p className="text-xl text-luxury-platinum/80 mb-12">
+            Join the exclusive circle of drivers who demand the best in financing.
           </p>
           <Link
             href="/apply"
-            className="inline-block px-8 py-4 rounded-lg bg-luxury-500 text-white font-semibold hover:bg-luxury-600 transition text-lg"
+            className="inline-block px-12 py-5 bg-white text-black font-bold text-lg rounded-full hover:bg-luxury-red hover:text-white hover:scale-105 transition-all duration-300 shadow-2xl"
           >
-            Get Started Now
+            Begin Your Journey
           </Link>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-luxury-700 bg-black/50 py-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center text-gray-400 text-sm">
-            <p>
-              © 2024 Supercar Finance. All rights reserved. FCRA Compliant. Data encrypted.
-            </p>
-            <div className="mt-4 space-x-6">
-              <a href="#" className="hover:text-white transition">Privacy Policy</a>
-              <a href="#" className="hover:text-white transition">Terms of Service</a>
-              <a href="#" className="hover:text-white transition">Support</a>
-            </div>
+      <footer className="border-t border-white/10 bg-black py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+          <div className="flex items-center space-x-2 mb-4 md:mb-0">
+            <span className="text-luxury-red font-serif font-bold text-lg">RF</span>
+            <span className="text-white/50 text-sm">© 2024 Revline Financing</span>
+          </div>
+          <div className="flex space-x-8 text-sm text-white/50">
+            <a href="#" className="hover:text-luxury-red transition-colors">Privacy</a>
+            <a href="#" className="hover:text-luxury-red transition-colors">Terms</a>
+            <a href="#" className="hover:text-luxury-red transition-colors">Contact</a>
           </div>
         </div>
       </footer>

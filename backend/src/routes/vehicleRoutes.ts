@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
-import { db } from '../db/connection.js';
-import { logAuditEvent, getClientIp } from '../utils/audit.js';
+import { db } from '../db/connection';
+import { logAuditEvent, getClientIp } from '../utils/audit';
 
 const router = Router();
 

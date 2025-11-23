@@ -1,5 +1,80 @@
 # Development Environment Setup
 
+## Running the Application
+
+### Start Both Services (Recommended)
+
+From the project root, run:
+
+```bash
+npm run dev
+```
+
+This starts both frontend and backend concurrently with hot-reload:
+- **Frontend**: http://localhost:3000 (Next.js dev server with fast refresh)
+- **Backend**: http://localhost:3001 (Node + ts-node with experimental ESM support)
+
+The script uses `cross-env` to ensure PORT environment variables are set correctly on all platforms (macOS, Linux, Windows).
+
+### Start Services Separately
+
+If you prefer to run them in separate terminals:
+
+**Terminal 1 - Frontend:**
+```bash
+npm run dev --prefix frontend
+```
+Runs on: http://localhost:3000
+
+**Terminal 2 - Backend:**
+```bash
+cd backend
+npm run dev
+# or
+PORT=3001 npm run dev
+```
+Runs on: http://localhost:3001
+
+### Verify Services are Running
+
+Health checks:
+```bash
+# Backend health
+curl http://localhost:3001/health
+
+# Frontend (should return HTML)
+curl http://localhost:3000/
+```
+
+Expected responses:
+- Backend: `{"status":"ok","timestamp":"..."}`
+- Frontend: `<!DOCTYPE html>...`
+
+### Troubleshooting: Port Already in Use
+
+If you see "address already in use" errors:
+
+**macOS/Linux:**
+```bash
+# Kill processes on ports 3000 and 3001
+lsof -i :3000 | awk 'NR>1 {print $2}' | xargs kill -9 || true
+lsof -i :3001 | awk 'NR>1 {print $2}' | xargs kill -9 || true
+
+# Then restart
+npm run dev
+```
+
+**Windows (PowerShell):**
+```powershell
+# Kill processes on ports 3000 and 3001
+Get-Process -Id (Get-NetTCPConnection -LocalPort 3000,3001).OwningProcess | Stop-Process -Force -ErrorAction SilentlyContinue
+
+# Then restart
+npm run dev
+```
+
+---
+
 ## Quick Start
 
 ### Prerequisites

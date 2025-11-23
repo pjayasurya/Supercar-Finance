@@ -2,6 +2,37 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 10, 10, 10;
+  --background-end-rgb: 10, 10, 10;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .glass-panel {
+    @apply bg-luxury-charcoal/80 backdrop-blur-md border border-luxury-red/20 rounded-2xl;
+  }
+
+  .red-text {
+    @apply bg-clip-text text-transparent bg-red-gradient;
+  }
+
+  .smooth-card {
+    @apply bg-luxury-charcoal/60 backdrop-blur-xl border border-white/5 rounded-3xl shadow-2xl;
+  }
+}
+
 @layer base {
   body {
     @apply bg-white text-gray-900;
@@ -12,7 +43,7 @@
   .btn-primary {
     @apply px-4 py-2 rounded-lg bg-luxury-500 text-white font-semibold hover:bg-luxury-600 transition duration-200;
   }
-  
+
   .btn-secondary {
     @apply px-4 py-2 rounded-lg border border-gray-300 text-gray-700 font-semibold hover:bg-gray-50 transition duration-200;
   }

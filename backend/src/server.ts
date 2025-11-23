@@ -2,12 +2,12 @@ import express, { Request, Response } from 'express';
 import 'express-async-errors';
 import cors from 'cors';
 import helmet from 'helmet';
-import { config } from './config.js';
-import { authenticateToken } from './middleware/auth.js';
-import creditRoutes from './routes/creditRoutes.js';
-import vehicleRoutes from './routes/vehicleRoutes.js';
-import applicationRoutes from './routes/applicationRoutes.js';
-import logger from './utils/logger.js';
+import { config } from './config';
+import { authenticateToken } from './middleware/auth';
+import creditRoutes from './routes/creditRoutes';
+import vehicleRoutes from './routes/vehicleRoutes';
+import applicationRoutes from './routes/applicationRoutes';
+import logger from './utils/logger';
 
 const app = express();
 

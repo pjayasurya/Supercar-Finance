@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid';
-import { db } from '../db/connection.js';
-import { config } from '../config.js';
+import { db } from '../db/connection';
+import { config } from '../config';
 
 interface LenderCriteria {
   minLoan: number;
@@ -24,27 +24,40 @@ export async function matchLenders(applicationData: any, creditData: any) {
 
   const approvals = [];
 
-  for (const lender of config.lenders) {
+  // Fetch lenders from DB
+  const lendersResult = await db.query('SELECT * FROM lenders');
+  const lenders = lendersResult.rows;
+
+  for (const lender of lenders) {
+    console.log(`Checking lender: ${lender.name}`);
+    console.log(`Applicant State: ${state}, Supported: ${lender.supported_states}`);
+
     // Check state eligibility
-    if (!lender.states.includes(state)) {
+    if (!lender.supported_states.includes(state)) {
+      console.log(`State mismatch: ${state} not in ${lender.supported_states}`);
       continue;
     }
 
     // Check loan amount range
     const loanAmount = desiredLoanAmount;
-    if (loanAmount < lender.minLoan || loanAmount > lender.maxLoan) {
+    console.log(`Loan Amount: ${loanAmount}, Min: ${lender.min_loan}, Max: ${lender.max_loan}`);
+    if (loanAmount < parseFloat(lender.min_loan) || loanAmount > parseFloat(lender.max_loan)) {
+      console.log('Loan amount mismatch');
       continue;
     }
 
     // Check FICO score (soft requirement)
+    console.log(`FICO: ${ficoScore}`);
     if (ficoScore < 580) {
+      console.log('FICO too low');
       continue;
     }
 
     // Calculate APR based on credit score
-    const baseAPR = lender.minAPR;
+    const baseAPR = parseFloat(lender.min_apr);
+    const maxAPR = parseFloat(lender.max_apr);
     const aprAdjustment = Math.max(0, (680 - ficoScore) * 0.001);
-    const apr = Math.min(lender.maxAPR, baseAPR + aprAdjustment);
+    const apr = Math.min(maxAPR, baseAPR + aprAdjustment);
 
     // Calculate monthly payment
     const monthlyRate = apr / 100 / 12;
@@ -52,7 +65,7 @@ export async function matchLenders(applicationData: any, creditData: any) {
     const monthlyPayment = monthlyRate === 0
       ? loanAmount / months
       : (loanAmount * monthlyRate * Math.pow(1 + monthlyRate, months)) /
-        (Math.pow(1 + monthlyRate, months) - 1);
+      (Math.pow(1 + monthlyRate, months) - 1);
 
     approvals.push({
       lenderId: lender.id,

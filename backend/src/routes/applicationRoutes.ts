@@ -1,10 +1,10 @@
 import { Router, Request, Response } from 'express';
 import { v4 as uuid } from 'uuid';
-import { db } from '../db/connection.js';
-import { getApplication, updateApplicationStatus } from '../services/applicationService.js';
-import { exportToLender, getPreApprovals } from '../services/lenderService.js';
-import { logAuditEvent, getClientIp } from '../utils/audit.js';
-import { authenticateToken } from '../middleware/auth.js';
+import { db } from '../db/connection';
+import { getApplication, updateApplicationStatus } from '../services/applicationService';
+import { exportToLender, getPreApprovals } from '../services/lenderService';
+import { logAuditEvent, getClientIp } from '../utils/audit';
+import { authenticateToken } from '../middleware/auth';
 
 const router = Router();
 
@@ -15,14 +15,14 @@ const router = Router();
 router.post('/', async (req: Request, res: Response) => {
   try {
     const data = req.body;
-    const userId = res.locals.userId || 'anon_' + uuid();
+    const userId = res.locals.userId || null;
 
     const appResult = await db.query(
       `INSERT INTO applications (
         id, user_id, first_name, last_name, email, phone,
         address, city, state, zip_code, annual_income, employment_status,
-        down_payment, desired_loan_amount, loan_term, status
-      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
+        down_payment, desired_loan_amount, loan_term, ssn_encrypted, dob, status
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)
       RETURNING id`,
       [
         uuid(),
@@ -40,6 +40,8 @@ router.post('/', async (req: Request, res: Response) => {
         data.downPayment,
         data.desiredLoanAmount,
         data.loanTerm,
+        data.ssn, // Storing plain for demo purposes, should be encrypted in prod
+        data.dob,
         'pending',
       ],
     );

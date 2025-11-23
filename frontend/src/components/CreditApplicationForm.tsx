@@ -71,275 +71,180 @@ export function CreditApplicationForm() {
     }
   };
 
+  const inputClasses = "mt-1 block w-full rounded-2xl border border-white/10 bg-luxury-charcoal/50 px-4 py-3 text-white placeholder-gray-500 shadow-sm focus:border-luxury-red focus:ring-1 focus:ring-luxury-red focus:outline-none transition-all duration-200";
+  const labelClasses = "block text-sm font-medium text-luxury-platinum/90 mb-1";
+  const errorClasses = "mt-1 text-xs text-red-400";
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
       {error && (
-        <div className="rounded-md bg-red-50 p-4 text-sm text-red-700">
+        <div className="rounded-lg bg-red-900/20 border border-red-500/20 p-4 text-sm text-red-200">
           {error}
         </div>
       )}
 
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
+        {/* Personal Info Section */}
+        <div className="sm:col-span-2">
+          <h3 className="text-lg font-serif font-bold text-white mb-4 border-b border-white/10 pb-2">Personal Information</h3>
+        </div>
+
         {/* First Name */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">
-            First Name
-          </label>
-          <input
-            {...register('firstName')}
-            type="text"
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-luxury-500 focus:outline-none focus:ring-luxury-500"
-          />
-          {errors.firstName && (
-            <p className="mt-1 text-sm text-red-600">{errors.firstName.message}</p>
-          )}
+          <label className={labelClasses}>First Name</label>
+          <input {...register('firstName')} type="text" className={inputClasses} placeholder="John" />
+          {errors.firstName && <p className={errorClasses}>{errors.firstName.message}</p>}
         </div>
 
         {/* Last Name */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Last Name
-          </label>
-          <input
-            {...register('lastName')}
-            type="text"
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-luxury-500 focus:outline-none focus:ring-luxury-500"
-          />
-          {errors.lastName && (
-            <p className="mt-1 text-sm text-red-600">{errors.lastName.message}</p>
-          )}
+          <label className={labelClasses}>Last Name</label>
+          <input {...register('lastName')} type="text" className={inputClasses} placeholder="Doe" />
+          {errors.lastName && <p className={errorClasses}>{errors.lastName.message}</p>}
         </div>
 
         {/* Email */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Email
-          </label>
-          <input
-            {...register('email')}
-            type="email"
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-luxury-500 focus:outline-none focus:ring-luxury-500"
-          />
-          {errors.email && (
-            <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
-          )}
+          <label className={labelClasses}>Email</label>
+          <input {...register('email')} type="email" className={inputClasses} placeholder="john@example.com" />
+          {errors.email && <p className={errorClasses}>{errors.email.message}</p>}
         </div>
 
         {/* Phone */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Phone (10 digits)
-          </label>
-          <input
-            {...register('phone')}
-            type="tel"
-            placeholder="5551234567"
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-luxury-500 focus:outline-none focus:ring-luxury-500"
-          />
-          {errors.phone && (
-            <p className="mt-1 text-sm text-red-600">{errors.phone.message}</p>
-          )}
+          <label className={labelClasses}>Phone (10 digits)</label>
+          <input {...register('phone')} type="tel" className={inputClasses} placeholder="5551234567" />
+          {errors.phone && <p className={errorClasses}>{errors.phone.message}</p>}
         </div>
 
         {/* SSN */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">
-            SSN (9 digits)
-          </label>
-          <input
-            {...register('ssn')}
-            type="password"
-            placeholder="●●●●●●●●●"
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-luxury-500 focus:outline-none focus:ring-luxury-500"
-          />
-          {errors.ssn && (
-            <p className="mt-1 text-sm text-red-600">{errors.ssn.message}</p>
-          )}
+          <label className={labelClasses}>SSN (9 digits)</label>
+          <input {...register('ssn')} type="password" className={inputClasses} placeholder="●●●●●●●●●" />
+          {errors.ssn && <p className={errorClasses}>{errors.ssn.message}</p>}
         </div>
 
         {/* Date of Birth */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Date of Birth
-          </label>
-          <input
-            {...register('dob')}
-            type="date"
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-luxury-500 focus:outline-none focus:ring-luxury-500"
-          />
-          {errors.dob && (
-            <p className="mt-1 text-sm text-red-600">{errors.dob.message}</p>
-          )}
+          <label className={labelClasses}>Date of Birth</label>
+          <input {...register('dob')} type="date" className={inputClasses} />
+          {errors.dob && <p className={errorClasses}>{errors.dob.message}</p>}
+        </div>
+
+        {/* Address Section */}
+        <div className="sm:col-span-2 mt-4">
+          <h3 className="text-lg font-serif font-bold text-white mb-4 border-b border-white/10 pb-2">Address Details</h3>
         </div>
 
         {/* Address */}
         <div className="sm:col-span-2">
-          <label className="block text-sm font-medium text-gray-700">
-            Street Address
-          </label>
-          <input
-            {...register('address')}
-            type="text"
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-luxury-500 focus:outline-none focus:ring-luxury-500"
-          />
-          {errors.address && (
-            <p className="mt-1 text-sm text-red-600">{errors.address.message}</p>
-          )}
+          <label className={labelClasses}>Street Address</label>
+          <input {...register('address')} type="text" className={inputClasses} placeholder="123 Luxury Lane" />
+          {errors.address && <p className={errorClasses}>{errors.address.message}</p>}
         </div>
 
         {/* City */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">
-            City
-          </label>
-          <input
-            {...register('city')}
-            type="text"
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-luxury-500 focus:outline-none focus:ring-luxury-500"
-          />
-          {errors.city && (
-            <p className="mt-1 text-sm text-red-600">{errors.city.message}</p>
-          )}
+          <label className={labelClasses}>City</label>
+          <input {...register('city')} type="text" className={inputClasses} placeholder="Beverly Hills" />
+          {errors.city && <p className={errorClasses}>{errors.city.message}</p>}
         </div>
 
-        {/* State */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            State (2-letter code)
-          </label>
-          <input
-            {...register('state')}
-            type="text"
-            maxLength={2}
-            placeholder="CA"
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-luxury-500 focus:outline-none focus:ring-luxury-500"
-          />
-          {errors.state && (
-            <p className="mt-1 text-sm text-red-600">{errors.state.message}</p>
-          )}
+        {/* State & Zip */}
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className={labelClasses}>State</label>
+            <input {...register('state')} type="text" maxLength={2} className={inputClasses} placeholder="CA" />
+            {errors.state && <p className={errorClasses}>{errors.state.message}</p>}
+          </div>
+          <div>
+            <label className={labelClasses}>ZIP Code</label>
+            <input {...register('zipCode')} type="text" maxLength={5} className={inputClasses} placeholder="90210" />
+            {errors.zipCode && <p className={errorClasses}>{errors.zipCode.message}</p>}
+          </div>
         </div>
 
-        {/* ZIP Code */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            ZIP Code
-          </label>
-          <input
-            {...register('zipCode')}
-            type="text"
-            maxLength={5}
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-luxury-500 focus:outline-none focus:ring-luxury-500"
-          />
-          {errors.zipCode && (
-            <p className="mt-1 text-sm text-red-600">{errors.zipCode.message}</p>
-          )}
+        {/* Financial Info Section */}
+        <div className="sm:col-span-2 mt-4">
+          <h3 className="text-lg font-serif font-bold text-white mb-4 border-b border-white/10 pb-2">Financial Profile</h3>
         </div>
 
         {/* Annual Income */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Annual Income ($)
-          </label>
-          <input
-            {...register('annualIncome', { valueAsNumber: true })}
-            type="number"
-            placeholder="100000"
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-luxury-500 focus:outline-none focus:ring-luxury-500"
-          />
-          {errors.annualIncome && (
-            <p className="mt-1 text-sm text-red-600">{errors.annualIncome.message}</p>
-          )}
+          <label className={labelClasses}>Annual Income ($)</label>
+          <input {...register('annualIncome', { valueAsNumber: true })} type="number" className={inputClasses} placeholder="250000" />
+          {errors.annualIncome && <p className={errorClasses}>{errors.annualIncome.message}</p>}
         </div>
 
         {/* Employment Status */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Employment Status
-          </label>
-          <select
-            {...register('employmentStatus')}
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-luxury-500 focus:outline-none focus:ring-luxury-500"
-          >
-            <option value="">Select...</option>
-            <option value="employed">Employed</option>
-            <option value="self-employed">Self-Employed</option>
-            <option value="retired">Retired</option>
+          <label className={labelClasses}>Employment Status</label>
+          <select {...register('employmentStatus')} className={inputClasses}>
+            <option value="" className="bg-luxury-charcoal">Select...</option>
+            <option value="employed" className="bg-luxury-charcoal">Employed</option>
+            <option value="self-employed" className="bg-luxury-charcoal">Self-Employed</option>
+            <option value="retired" className="bg-luxury-charcoal">Retired</option>
           </select>
-          {errors.employmentStatus && (
-            <p className="mt-1 text-sm text-red-600">{errors.employmentStatus.message}</p>
-          )}
+          {errors.employmentStatus && <p className={errorClasses}>{errors.employmentStatus.message}</p>}
         </div>
 
         {/* Down Payment */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Down Payment ($)
-          </label>
-          <input
-            {...register('downPayment', { valueAsNumber: true })}
-            type="number"
-            placeholder="50000"
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-luxury-500 focus:outline-none focus:ring-luxury-500"
-          />
-          {errors.downPayment && (
-            <p className="mt-1 text-sm text-red-600">{errors.downPayment.message}</p>
-          )}
+          <label className={labelClasses}>Down Payment ($)</label>
+          <input {...register('downPayment', { valueAsNumber: true })} type="number" className={inputClasses} placeholder="50000" />
+          {errors.downPayment && <p className={errorClasses}>{errors.downPayment.message}</p>}
         </div>
 
         {/* Desired Loan Amount */}
         <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Desired Loan Amount ($80K-$500K)
-          </label>
-          <input
-            {...register('desiredLoanAmount', { valueAsNumber: true })}
-            type="number"
-            placeholder="200000"
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-luxury-500 focus:outline-none focus:ring-luxury-500"
-          />
-          {errors.desiredLoanAmount && (
-            <p className="mt-1 text-sm text-red-600">{errors.desiredLoanAmount.message}</p>
-          )}
+          <label className={labelClasses}>Desired Loan Amount ($)</label>
+          <input {...register('desiredLoanAmount', { valueAsNumber: true })} type="number" className={inputClasses} placeholder="200000" />
+          {errors.desiredLoanAmount && <p className={errorClasses}>{errors.desiredLoanAmount.message}</p>}
         </div>
 
         {/* Loan Term */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Loan Term (months: 24-84)
-          </label>
-          <input
-            {...register('loanTerm', { valueAsNumber: true })}
-            type="number"
-            placeholder="60"
-            min="24"
-            max="84"
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-luxury-500 focus:outline-none focus:ring-luxury-500"
-          />
-          {errors.loanTerm && (
-            <p className="mt-1 text-sm text-red-600">{errors.loanTerm.message}</p>
-          )}
+        <div className="sm:col-span-2">
+          <label className={labelClasses}>Loan Term (Months)</label>
+          <div className="flex items-center space-x-4">
+            <input
+              {...register('loanTerm', { valueAsNumber: true })}
+              type="range"
+              min="24"
+              max="84"
+              step="12"
+              className="w-full h-2 bg-luxury-charcoal rounded-lg appearance-none cursor-pointer accent-luxury-red"
+            />
+            <span className="text-white font-mono w-12 text-center">60</span>
+          </div>
+          {errors.loanTerm && <p className={errorClasses}>{errors.loanTerm.message}</p>}
         </div>
       </div>
 
-      <div className="text-xs text-gray-600 space-y-2">
-        <p>
-          🔒 <strong>Secure soft pull:</strong> We use soft-pull credit inquiries that
-          don&apos;t affect your credit score. Your information is encrypted and
-          protected.
-        </p>
-        <p>
-          ✓ <strong>FCRA Compliant:</strong> We comply with all Federal Credit
-          Reporting Act requirements and maintain strict data privacy.
+      <div className="pt-6">
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full group relative overflow-hidden rounded-full bg-luxury-red px-8 py-4 font-bold text-white transition-all hover:shadow-[0_0_40px_-10px_rgba(208,0,0,0.5)] disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          <span className="relative z-10 flex items-center justify-center gap-2">
+            {loading ? (
+              <>
+                <div className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
+                Processing...
+              </>
+            ) : (
+              <>
+                Get Instant Pre-Approval
+                <span className="group-hover:translate-x-1 transition-transform">→</span>
+              </>
+            )}
+          </span>
+          <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+        </button>
+        <p className="text-center text-xs text-luxury-platinum/50 mt-4">
+          By clicking "Get Instant Pre-Approval", you agree to our Terms of Service and Privacy Policy.
         </p>
       </div>
-
-      <button
-        type="submit"
-        disabled={loading}
-        className="w-full rounded-lg bg-luxury-500 px-4 py-3 font-semibold text-white hover:bg-luxury-600 disabled:bg-gray-400 transition duration-200"
-      >
-        {loading ? 'Processing Your Application...' : 'Get Pre-Approved in 60 Seconds'}
-      </button>
     </form>
   );
 }

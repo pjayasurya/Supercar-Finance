@@ -3,10 +3,10 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { onAuthStateChanged, User } from 'firebase/auth';
-import { auth } from '@/lib/firebase';
+import { auth, isUsingMockAuth, MockUser } from '@/lib/firebase';
 
 interface AuthContextType {
-  user: User | null;
+  user: User | MockUser | null;
   loading: boolean;
   error?: string;
 }
@@ -17,24 +17,39 @@ export const AuthContext = React.createContext<AuthContextType>({
 });
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | MockUser | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      setUser(currentUser);
-      setLoading(false);
-
-      if (currentUser) {
-        const token = await currentUser.getIdToken();
-        localStorage.setItem('authToken', token);
-      } else {
-        localStorage.removeItem('authToken');
+    if (isUsingMockAuth) {
+      // Use mock auth
+      const mockUserStr = localStorage.getItem('mockUser');
+      if (mockUserStr) {
+        try {
+          const mockUser = JSON.parse(mockUserStr) as MockUser;
+          setUser(mockUser);
+        } catch (err) {
+          localStorage.removeItem('mockUser');
+        }
       }
-    });
+      setLoading(false);
+    } else {
+      // Use Firebase auth
+      const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+        setUser(currentUser);
+        setLoading(false);
 
-    return () => unsubscribe();
+        if (currentUser) {
+          const token = await currentUser.getIdToken();
+          localStorage.setItem('authToken', token);
+        } else {
+          localStorage.removeItem('authToken');
+        }
+      });
+
+      return () => unsubscribe();
+    }
   }, [router]);
 
   return (

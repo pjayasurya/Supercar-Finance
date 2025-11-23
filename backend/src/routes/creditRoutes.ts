@@ -1,10 +1,10 @@
 import { Router, Request, Response } from 'express';
-import { applicationSchema } from '../schemas/application.js';
-import { createApplication, updateApplicationStatus } from '../services/applicationService.js';
-import { softPullCredit, validateApplicationEligibility } from '../services/creditService.js';
-import { matchLenders, savePreApprovals, getPreApprovals } from '../services/lenderService.js';
-import { logAuditEvent, getClientIp } from '../utils/audit.js';
-import { authenticateToken } from '../middleware/auth.js';
+import { applicationSchema } from '../schemas/application';
+import { createApplication, updateApplicationStatus } from '../services/applicationService';
+import { softPullCredit, validateApplicationEligibility } from '../services/creditService';
+import { matchLenders, savePreApprovals, getPreApprovals } from '../services/lenderService';
+import { logAuditEvent, getClientIp } from '../utils/audit';
+import { authenticateToken } from '../middleware/auth';
 
 const router = Router();
 
@@ -17,17 +17,13 @@ router.post('/apply', async (req: Request, res: Response) => {
     const data = applicationSchema.parse(req.body);
 
     // Get or create user
-    let userId = res.locals.userId;
-    if (!userId) {
-      // Create temporary user for anonymous applications
-      userId = 'anon_' + Date.now();
-    }
+    let userId = res.locals.userId || null;
 
     // Create application
     const applicationId = await createApplication(userId, data);
 
-    // Perform soft-pull credit check
-    const creditData = await softPullCredit(data.ssn, data.dob);
+    // Perform soft-pull credit check with Experian
+    const creditData = await softPullCredit(data.ssn, data.dob, data.firstName, data.lastName);
 
     // Validate eligibility
     const eligible = await validateApplicationEligibility(data, creditData);
@@ -35,7 +31,7 @@ router.post('/apply', async (req: Request, res: Response) => {
     if (!eligible) {
       await updateApplicationStatus(applicationId, 'declined', creditData);
       await logAuditEvent(userId, applicationId, 'application_declined', { reason: 'Eligibility check failed' }, getClientIp(req));
-      
+
       return res.status(200).json({
         id: applicationId,
         status: 'declined',
@@ -94,7 +90,7 @@ router.get('/pre-approvals/:applicationId', async (req: Request, res: Response) 
 router.get('/analysis/:applicationId', async (req: Request, res: Response) => {
   try {
     const { applicationId } = req.params;
-    
+
     // TODO: Fetch from database
     res.json({
       ficoScore: 720,

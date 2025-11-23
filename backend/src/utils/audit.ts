@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import { db } from '../db/connection.js';
+import { db } from '../db/connection';
 
 export async function logAuditEvent(
   userId: string | null,

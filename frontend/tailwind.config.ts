@@ -10,21 +10,33 @@ const config: Config = {
     extend: {
       colors: {
         luxury: {
-          50: '#faf8f7',
-          100: '#f0e8e5',
-          200: '#dfc4bb',
-          300: '#ce9e8f',
-          400: '#b87058',
-          500: '#a24830',
-          600: '#8a3d27',
-          700: '#6b301e',
-          800: '#4d2316',
-          900: '#32160d',
+          red: '#D00000',
+          'red-light': '#FF3333',
+          'red-dark': '#8B0000',
+          black: '#050505', // Darker black
+          charcoal: '#0F0F0F', // Darker charcoal
+          platinum: '#E5E4E2',
+          50: '#fff0f0',
+          100: '#ffe0e0',
+          200: '#ffc2c2',
+          300: '#ff9494',
+          400: '#ff5757',
+          500: '#D00000', // Main Red
+          600: '#a30000',
+          700: '#7a0000',
+          800: '#660000',
+          900: '#540000',
+          950: '#300000',
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        serif: ['Playfair Display', 'serif'],
+        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        serif: ['var(--font-playfair)', 'serif'],
+      },
+      backgroundImage: {
+        'luxury-gradient': 'linear-gradient(to right, #050505, #141414)',
+        'red-gradient': 'linear-gradient(135deg, #D00000 0%, #FF3333 50%, #8B0000 100%)',
+        'glass-gradient': 'linear-gradient(135deg, rgba(20, 20, 20, 0.7) 0%, rgba(5, 5, 5, 0.9) 100%)',
       },
     },
   },

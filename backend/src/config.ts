@@ -25,7 +25,10 @@ export const config = {
   credit: {
     apiKey: process.env.CREDIT_API_KEY,
     apiSecret: process.env.CREDIT_API_SECRET,
-    provider: process.env.CREDIT_PROVIDER || 'experian', // experian, transunion, equifax
+    provider: process.env.CREDIT_API_PROVIDER || 'experian',
+    endpoint: process.env.CREDIT_API_ENDPOINT || 'https://api.experian.com/creditpull/v3',
+    username: process.env.CREDIT_API_USERNAME,
+    password: process.env.CREDIT_API_PASSWORD,
   },
   
   // Firebase
